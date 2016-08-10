@@ -246,7 +246,7 @@ class exports.Parser extends events.EventEmitter
     @saxParser = sax.parser @options.strict, {
       trim: false,
       normalize: false,
-      position: @options.includeMetadata,
+      position: if @options.includeMetadata then true else undefined,
       xmlns: @options.xmlns
     }
 
