@@ -574,3 +574,7 @@ module.exports =
     console.log 'Result object: ' + util.inspect r, false, 10
     equ r.hasOwnProperty('SAMP'), true
     equ r.SAMP.hasOwnProperty('TAGN'), true)
+
+  'test metadata extraction': skeleton(metakey: '$$$', (r) ->
+    equ r.sample.chartest.$$$.position.line 2
+    equ r.sample.chartest.$$$.position.column 5)
