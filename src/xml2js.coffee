@@ -347,6 +347,10 @@ class exports.Parser extends events.EventEmitter
             node[@options.charkey] = obj[@options.charkey]
             delete obj[@options.charkey]
 
+          if @options.metakey of obj
+            node[@options.metakey] = obj[@options.metakey]
+            delete obj[@options.metakey]
+
           if Object.getOwnPropertyNames(obj).length > 0
             node[@options.childkey] = obj
 

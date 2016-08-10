@@ -581,6 +581,14 @@ module.exports =
     equ r.sample.chartest[0].$$$.position.line, 1
     equ r.sample.chartest[0].$$$.position.column, 36)
 
+  'test metadata extraction with explicit children and explicit arrays': skeleton(metakey: '$$$', includeMetadata: true, explicitChildren: true, explicitArray: true, explicitRoot: true, (r) ->
+    equ r['sample'].$$$.position.line, 0
+    equ r['sample'].$$$.position.column, 8
+    equ r['sample'].$$['chartest'][0].$$$.position.line, 1
+    equ r['sample'].$$['chartest'][0].$$$.position.column, 36
+    equ r['sample'].$$['listtest'][0].$$['item'][1].$$$.position.line, 19
+    equ r['sample'].$$['listtest'][0].$$['item'][1].$$$.position.column, 14)
+
   'test metadata skipping': skeleton(metakey: '$$$', includeMetadata: false, (r) ->
     equ r.sample.$$$, undefined
     equ r.sample.chartest[0].$$$, undefined)
