@@ -209,6 +209,24 @@ E.g. "0" becomes 0 and "15.56" becomes 15.56
 - `parseBooleans`: parses boolean-like strings to booleans
 E.g. "true" becomes true and "False" becomes false
 
+Metadata
+========
+In some cases it is useful to have metadata at hand, e.g. when data-level errors
+should point to a certain location in the XML source. Line/column position information
+can be added to the nodes by enabling the `includeMetadata` option.
+
+Due to SAX parsing limitations, the line/column will always point at the end of the node
+starting tag.
+
+```javascript
+var xml2js = require('xml2js');
+
+var parser = new xml2js.Parser({includeMetadata: true});
+parser.parseString("<data></data>", function (err, result) {
+    console.dir(result.data.$$$);
+});
+```
+
 Options
 =======
 
@@ -220,7 +238,9 @@ value})``. Possible options are:
     Version 0.1 default was `@`.
   * `charkey` (default: `_`): Prefix that is used to access the character
     content. Version 0.1 default was `#`.
+  * `metakey` (default: `$$$`): Prefix that is used to access node metadata
   * `explicitCharkey` (default: `false`)
+  * `includeMetadata` (default `false`): Include position metadata in nodes
   * `trim` (default: `false`): Trim the whitespace at the beginning and end of
     text nodes.
   * `normalizeTags` (default: `false`): Normalize all tag names to lowercase.

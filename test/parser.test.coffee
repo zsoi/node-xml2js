@@ -574,3 +574,13 @@ module.exports =
     console.log 'Result object: ' + util.inspect r, false, 10
     equ r.hasOwnProperty('SAMP'), true
     equ r.SAMP.hasOwnProperty('TAGN'), true)
+
+  'test metadata extraction': skeleton(metakey: '$$$', includeMetadata: true, (r) ->
+    equ r.sample.$$$.position.line, 0
+    equ r.sample.$$$.position.column, 8
+    equ r.sample.chartest[0].$$$.position.line, 1
+    equ r.sample.chartest[0].$$$.position.column, 36)
+
+  'test metadata skipping': skeleton(metakey: '$$$', includeMetadata: false, (r) ->
+    equ r.sample.$$$, undefined
+    equ r.sample.chartest[0].$$$, undefined)

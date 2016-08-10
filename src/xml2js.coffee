@@ -69,6 +69,8 @@ exports.defaults =
     tagNameProcessors: null
     valueProcessors: null
     emptyTag: ''
+    metakey: "$$$"
+    includeMetadata: false
 
   "0.2":
     explicitCharkey: false
@@ -105,6 +107,8 @@ exports.defaults =
     chunkSize: 10000
     emptyTag: ''
     cdata: false
+    metakey: "$$$"
+    includeMetadata: false
 
 class exports.ValidationError extends Error
   constructor: (message) ->
@@ -242,6 +246,7 @@ class exports.Parser extends events.EventEmitter
     @saxParser = sax.parser @options.strict, {
       trim: false,
       normalize: false,
+      position: if @options.includeMetadata then true else undefined,
       xmlns: @options.xmlns
     }
 
@@ -286,6 +291,9 @@ class exports.Parser extends events.EventEmitter
             @assignOrPush obj, processedKey, newValue
           else
             obj[attrkey][processedKey] = newValue
+
+      if @options.includeMetadata
+        obj[@options.metakey] = {position: {line: @saxParser.line, column: @saxParser.column} }
 
       # need a place to store the node name
       obj["#name"] = if @options.tagNameProcessors then processName(@options.tagNameProcessors, node.name) else node.name
