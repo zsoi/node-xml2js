@@ -576,5 +576,7 @@ module.exports =
     equ r.SAMP.hasOwnProperty('TAGN'), true)
 
   'test metadata extraction': skeleton(metakey: '$$$', (r) ->
+    equ r.sample.$$$.position.line 1
+    equ r.sample.$$$.position.column 1
     equ r.sample.chartest.$$$.position.line 2
     equ r.sample.chartest.$$$.position.column 5)
